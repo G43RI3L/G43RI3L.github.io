@@ -25,17 +25,20 @@
             position: relative;
         }
 
-        /* Slideshow de imagens */
-        .slideshow {
+        /* Contêiner do slideshow */
+        .slideshow-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; /* Ajuste o tamanho da imagem */
+            height: 300px;
+            overflow: hidden;
+            border-radius: 20px; /* Borda arredondada */
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
         }
 
-        .slideshow img {
+        .slideshow-container img {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -44,7 +47,7 @@
             transition: opacity 1s ease-in-out;
         }
 
-        .slideshow img.active {
+        .slideshow-container img.active {
             opacity: 1;
         }
 
@@ -81,11 +84,11 @@
 <body>
 
     <!-- Slideshow -->
-    <div class="slideshow">
+    <div class="slideshow-container">
         <img src="01-foto-namorando.jpg" class="active">
         <img src="02-foto-namorando.jpeg">
         <img src="03-foto-namorando.jpeg">
-        <img src="04-foto-namorando.jpeg"> 
+        <img src="04-foto-namorando.jpeg">
         <img src="05-foto-namorando.jpeg">
         <img src="06-foto-namorando.jpeg">
     </div>
@@ -139,9 +142,9 @@
 
         setInterval(criarCoracao, 500);
 
-        // Slideshow de imagens
+        // Slideshow de imagens em loop infinito
         let index = 0;
-        const imagens = document.querySelectorAll(".slideshow img");
+        const imagens = document.querySelectorAll(".slideshow-container img");
 
         function mudarImagem() {
             imagens.forEach((img, i) => {
