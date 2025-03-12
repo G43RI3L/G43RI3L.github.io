@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contador ao Vivo</title>
+    <title>Tempo de Amor ❤️</title>
     <style>
         body {
             display: flex;
@@ -13,15 +13,17 @@
             height: 100vh;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            text-align: center;
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
+            color: red;
         }
 
         #contador {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: blue;
         }
@@ -29,17 +31,27 @@
 </head>
 <body>
 
-    <h1>Contador ao Vivo</h1>
-    <div id="contador">0</div>
+    <h1>💖 Te amo há... 💖</h1>
+    <div id="contador"></div>
 
     <script>
-        let contador = 0;
-        const elemento = document.getElementById("contador");
+        function atualizarContador() {
+            const dataInicio = new Date("2024-09-12T00:00:00");
+            const agora = new Date();
 
-        setInterval(() => {
-            contador++;
-            elemento.textContent = contador;
-        }, 1000); // Atualiza a cada 1 segundo
+            const diffMs = agora - dataInicio; // Diferença em milissegundos
+
+            const segundos = Math.floor((diffMs / 1000) % 60);
+            const minutos = Math.floor((diffMs / (1000 * 60)) % 60);
+            const horas = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+            const dias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+            document.getElementById("contador").textContent = 
+                `Te amo há ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos.`;
+        }
+
+        atualizarContador();
+        setInterval(atualizarContador, 1000);
     </script>
 
 </body>
