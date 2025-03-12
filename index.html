@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tempo de Amor ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet"> 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             display: flex;
             flex-direction: column;
@@ -12,26 +19,78 @@
             align-items: center;
             height: 100vh;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #2c2c2c; /* Cinza escuro */
             text-align: center;
+            overflow: hidden;
+            position: relative;
         }
 
+        /* Slideshow de imagens */
+        .slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .slideshow img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slideshow img.active {
+            opacity: 1;
+        }
+
+        /* Título romântico */
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
-            color: red;
+            color: white;
+            font-family: 'Dancing Script', cursive;
         }
 
+        /* Contador */
         #contador {
             font-size: 1.8rem;
             font-weight: bold;
-            color: blue;
+            color: white;
+        }
+
+        /* Corações caindo */
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 1.5rem;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <h1>💖 Te amo há... 💖</h1>
+    <!-- Slideshow -->
+    <div class="slideshow">
+        <img src="01-foto-namorando.jpg" class="active">
+        <img src="02-foto-namorando.jpeg">
+        <img src="03-foto-namorando.jpeg">
+        <img src="04-foto-namorando.jpeg">
+        <img src="05-foto-namorando.jpeg">
+        <img src="06-foto-namorando.jpeg">
+    </div>
+
+    <h1>Emilly, eu te amo ❤️</h1>
     <div id="contador"></div>
 
     <script>
@@ -47,27 +106,15 @@
             let segundos = agora.getSeconds() - dataInicio.getSeconds();
 
             // Ajustar valores negativos
-            if (segundos < 0) {
-                segundos += 60;
-                minutos--;
-            }
-            if (minutos < 0) {
-                minutos += 60;
-                horas--;
-            }
-            if (horas < 0) {
-                horas += 24;
-                dias--;
-            }
+            if (segundos < 0) { segundos += 60; minutos--; }
+            if (minutos < 0) { minutos += 60; horas--; }
+            if (horas < 0) { horas += 24; dias--; }
             if (dias < 0) {
                 let mesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0);
                 dias += mesAnterior.getDate();
                 meses--;
             }
-            if (meses < 0) {
-                meses += 12;
-                anos--;
-            }
+            if (meses < 0) { meses += 12; anos--; }
 
             document.getElementById("contador").textContent = 
                 `${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos.`;
@@ -75,6 +122,38 @@
 
         atualizarContador();
         setInterval(atualizarContador, 1000);
+
+        // Corações caindo
+        function criarCoracao() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(criarCoracao, 500);
+
+        // Slideshow de imagens
+        let index = 0;
+        const imagens = document.querySelectorAll(".slideshow img");
+
+        function mudarImagem() {
+            imagens.forEach((img, i) => {
+                img.classList.remove("active");
+                if (i === index) {
+                    img.classList.add("active");
+                }
+            });
+            index = (index + 1) % imagens.length;
+        }
+
+        setInterval(mudarImagem, 3000);
     </script>
 
 </body>
