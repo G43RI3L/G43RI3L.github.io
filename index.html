@@ -36,18 +36,41 @@
 
     <script>
         function atualizarContador() {
-            const dataInicio = new Date("2024-09-12T00:00:00");
+            const dataInicio = new Date("2024-09-12T00:00:00"); // Ajustado para 2024
             const agora = new Date();
 
-            const diffMs = agora - dataInicio; // Diferença em milissegundos
+            let anos = agora.getFullYear() - dataInicio.getFullYear();
+            let meses = agora.getMonth() - dataInicio.getMonth();
+            let dias = agora.getDate() - dataInicio.getDate();
+            let horas = agora.getHours() - dataInicio.getHours();
+            let minutos = agora.getMinutes() - dataInicio.getMinutes();
+            let segundos = agora.getSeconds() - dataInicio.getSeconds();
 
-            const segundos = Math.floor((diffMs / 1000) % 60);
-            const minutos = Math.floor((diffMs / (1000 * 60)) % 60);
-            const horas = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
-            const dias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            // Ajustar valores negativos
+            if (segundos < 0) {
+                segundos += 60;
+                minutos--;
+            }
+            if (minutos < 0) {
+                minutos += 60;
+                horas--;
+            }
+            if (horas < 0) {
+                horas += 24;
+                dias--;
+            }
+            if (dias < 0) {
+                let mesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0);
+                dias += mesAnterior.getDate();
+                meses--;
+            }
+            if (meses < 0) {
+                meses += 12;
+                anos--;
+            }
 
             document.getElementById("contador").textContent = 
-                `Te amo há ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos.`;
+                `${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos.`;
         }
 
         atualizarContador();
